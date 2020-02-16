@@ -1,0 +1,13 @@
+[Unit]
+Description=This is our program it does something!
+
+[Service]
+User=cloud_user
+Group=cloud_user
+WorkingDirectory=/home/cloud_user/seccompTests
+ExecStart=/home/cloud_user/seccompTests/our-program KILL
+SystemCallFilter=chmod rt_sigreturn exit read write exit_group open close lseek nanosleep mmap mprotect openat fstat close access arch_prctl brk munmap
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
