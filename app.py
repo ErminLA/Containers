@@ -36,11 +36,11 @@ def youtube_video():
                         "sGOlcIVd4Dw",
                         "h7a4ATtwkGI",
                         "4bSNfzucG8A"   ]
-        return '<iframe src="' + base_url + video_ids[random.randint(0,18)] + '"></iframe>'
+        return '<iframe width="560" height="315" src="' + base_url + video_ids[random.randint(0,18)] + '"></iframe>'
 
 @app.route("/random_number")
 def random_number():
-        return hashlib.sha224(str(random.randint(1, 10149583095834095834059349)).encode()).hexdigest()
+        return '<h1>' + hashlib.sha224(str(random.randint(1, 10149583095834095834059349)).encode()).hexdigest() + '</h1>'
 
 @app.route("/motd")
 def motd():
