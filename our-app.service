@@ -1,0 +1,12 @@
+[Unit]
+Description=This is our program it does something!
+
+[Service]
+User=backend
+Group=backend
+WorkingDirectory=/home/backend/our-backend
+ExecStart=/home/backend/our-backend/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
