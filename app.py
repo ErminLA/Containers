@@ -1,3 +1,5 @@
+#!/bin/python3.6
+
 from flask import Flask
 from flask_cors import CORS
 import mysql.connector as mariadb
@@ -44,7 +46,7 @@ def random_number():
 
 @app.route("/motd")
 def motd():
-        mariadb_connection = mariadb.connect(user='chronic', password='Test321', database='MyDB')
+        mariadb_connection = mariadb.connect(user='chronic', password='Test321', database='MyDB', host='10.95.211.29')
         cursor = mariadb_connection.cursor()
         cursor.execute("SELECT msg FROM motd;")
         #cursor.close()
@@ -52,12 +54,14 @@ def motd():
         msg = cursor.fetchall()[random.randint(0,8)][0]
         mariadb_connection.commit()
 
-        return str(msg)
+        mariadb_connection.close()
+
+        return '<h1>' + str(msg) + '</h1>'
 
 @app.route("/set_motd")
 def set_motd():
         msg1 = "Whoever said that the definition of insanity is doing the same thing over and over again and expecting different results has obviously never had to reboot a computer."
-        msg2 = "Programmer\’s girlfriend: Are you going to sit and type in front of that thing all day or are you going out with me?\nProgrammer: Yes."
+        msg2 = "Programmer\�~@~Ys girlfriend: Are you going to sit and type in front of that thing all day or are you going out with me?\nProgrammer: Yes."
         msg3 = "What do you call 8 hobbits?\nA hobbyte"
         msg4 = "How many programmers does it take to change a light bulb?\nNone. It\'s a hardware problem."
         msg5 = "I broke my finger last week. On the other hand I\'m ok."
@@ -68,7 +72,7 @@ def set_motd():
 
         messages = [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9,]
 
-        mariadb_connection = mariadb.connect(user='chronic', password='Test321', database='MyDB')
+        mariadb_connection = mariadb.connect(user='chronic', password='Test321', database='MyDB',  host='10.95.211.29')
         cursor = mariadb_connection.cursor()
 
         counter = 0
@@ -83,4 +87,6 @@ def set_motd():
 
 
 if __name__ == '__main__':
-        app.run(debug=True,host='0.0.0.0',port=65535)
+        from waitress import serve
+        serve(app, host="127.0.0.1", port=8080)
+
